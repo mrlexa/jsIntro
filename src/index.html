@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+  <head>
+    <title>HTML + JS boilerplate project</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  </head>
+  <body>
+    <div class="header">
+        <div class="inline">Todo list </div>
+        <div class="inline"> 
+          <input type="text" id="searchText" placeholder="Search..." >
+        </div>
+    </div>
+    <div class='inline'> 
+      <input type="text" id="addText" placeholder="New task..."> 
+      <button id="addButton">ADD</button>  
+    </div>
+
+    <div>
+      <div class='inline'>OPEN</div>
+      <select id="selectOpen" class='inline'>
+        <option value="1">Text (asc)</option>
+        <option value="2">Text (desc)</option>
+        <option value="3">Date (asc)</option>
+        <option value="4">Date (desc)</option>
+      </select>
+    </div>
+    <div id="listOpen">
+      <div>task 1</div>
+      <div>task 2</div>
+      <div>task 3</div>
+    </div>
+    <div id="clearOpen" class="clear">Clear "Open" list</div>
+    <br>
+    <div>
+      <div class='inline'> DONE</div>
+      <select class='inline' id="selectDone">
+        <option value="1">Text (asc)</option>
+        <option value="2">Text (desc)</option>
+        <option value="3">Date (asc)</option>
+        <option value="4">Date (desc)</option>
+      </select>
+    </div>
+
+    <div id="listDone">
+      <div>task 1</div>
+      <div>task 2</div>
+      <div>task 3</div>
+    </div>    
+    <div id="clearDone" class="clear">Clear "Done" list</div>
+  </body>
+</html>
