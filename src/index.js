@@ -41,10 +41,10 @@ TodoList.prototype.save = function() {
 
 TodoList.prototype.load = function() {
   // load from storage
-  // let myListItems = JSON.parse(localStorage.getItem('myListItems'));
+  let myListItems = JSON.parse(localStorage.getItem('myListItems'));
 
   // load default
-  let myListItems = null;
+  // let myListItems = null;
 
   let item;
   if (!myListItems) {
@@ -63,7 +63,6 @@ TodoList.prototype.load = function() {
     item.setDone();
   } else {
     myListItems.forEach(itm => {
-      console.log(itm);
       item = this.createItem(itm.text);
       item.id = itm.id;
       item.dateCreated = new Date(itm.dateCreated);
@@ -163,7 +162,7 @@ let todoList = new TodoList();
 // load all on start
 todoList.load();
 
-function drawItem(item, itemListId) {
+function drawItem(item, itemListId, toTop) {
   let listElement = document.getElementById(itemListId);
 
   let div = document.createElement('div');
@@ -218,8 +217,11 @@ function drawItem(item, itemListId) {
   deleteBtn.style.display = 'none';
   deleteBtn.addEventListener('click', deleteBtnEvent);
   div.appendChild(deleteBtn);
-
-  listElement.appendChild(div);
+  if (toTop) {
+    listElement.prepend(div);
+  } else {
+    listElement.appendChild(div);
+  }
 }
 
 function getTime(d) {
@@ -271,9 +273,6 @@ function editMouseOverEvent(e) {
   }
   id = 'btn' + id.substring(3);
   let btn = document.getElementById(id);
-  if (btn == null) {
-    console.log('id is fail - ', e.target);
-  }
   btn.style.display = 'inline-block';
   e.stopPropagation();
 }
@@ -284,9 +283,6 @@ function editMouseOutEvent(e) {
   }
   id = 'btn' + id.substring(3);
   let btn = document.getElementById(id);
-  if (btn == null) {
-    console.log('id is fail - ', e.target);
-  }
   btn.style.display = 'none';
   e.stopPropagation();
 }
@@ -296,6 +292,7 @@ function saveValueEvent(e) {
   if (event.keyCode === 13) {
     todoList.itemById(parent.id.substring(3)).text = e.srcElement.value;
     todoList.save();
+    e.srcElement.fromSave = true;
     parent.innerHTML = e.srcElement.value;
   }
   if (event.keyCode === 27) {
@@ -305,12 +302,23 @@ function saveValueEvent(e) {
 
 function editOutEvent(e) {
   let parent = e.srcElement.parentElement;
-  parent.innerHTML = e.srcElement.oldValue;
+  if (!e.srcElement.fromSave) {
+    parent.innerHTML = e.srcElement.oldValue;
+  }
 }
 
 // setup listeners
 let addButton = document.getElementById('addButton');
 addButton.addEventListener('click', addNewItemEvent);
+
+let addText = document.getElementById('addText');
+addText.addEventListener('keyup', addTextClickEvent);
+
+function addTextClickEvent(e) {
+  if (event.keyCode === 13) {
+    addNewItemEvent(e);
+  }
+}
 
 function addNewItemEvent(e) {
   let text = document.getElementById('addText'); // искать рядом, а не повсему документу
@@ -319,9 +327,9 @@ function addNewItemEvent(e) {
     return;
   }
 
-  todoList.createItem(val);
-  todoList.redrawItems('listOpen');
-
+  let itm = todoList.createItem(val);
+  //todoList.redrawItems('listOpen');
+  drawItem(itm, 'listOpen', true);
   text.value = '';
 }
 

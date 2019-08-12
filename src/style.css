@@ -48,3 +48,12 @@ input[type="checkbox"] {
     margin:10px;
     text-decoration: underline;
   } 
+
+.alignleft {
+  float: left;
+  margin:10px;
+}
+.alignright  {
+  float: right;
+  margin:10px;
+}
