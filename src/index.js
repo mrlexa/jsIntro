@@ -41,10 +41,10 @@ TodoList.prototype.save = function() {
 
 TodoList.prototype.load = function() {
   // load from storage
-  // let myListItems = JSON.parse(localStorage.getItem('myListItems'));
+  let myListItems = JSON.parse(localStorage.getItem('myListItems'));
 
   // load default
-  let myListItems = null;
+  // let myListItems = null;
 
   let item;
   if (!myListItems) {
